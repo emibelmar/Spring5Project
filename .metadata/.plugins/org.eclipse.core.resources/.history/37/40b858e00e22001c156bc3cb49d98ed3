@@ -1,0 +1,24 @@
+package com.ebmdev.sprinboot.app.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.ebmdev.sprinboot.app.services.IndexService;
+
+@Controller
+public class IndexController {
+
+	private IndexController indexController;
+
+	public IndexController(IndexController indexController) {
+		this.indexController = indexController;
+	}
+
+	@GetMapping({ "/", "", "/index" })
+	public String index(Model model) {
+		model.addAttribute("objeto", indexService.ejemplo());
+		return "index";
+	}
+
+}

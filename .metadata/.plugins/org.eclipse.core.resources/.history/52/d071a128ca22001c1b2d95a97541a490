@@ -1,0 +1,7 @@
+package com.ebmdev.sprinboot.app.models.domain;
+
+public class ItemFactura {
+
+	private Producto producto;
+	private Integer cantidad;
+}

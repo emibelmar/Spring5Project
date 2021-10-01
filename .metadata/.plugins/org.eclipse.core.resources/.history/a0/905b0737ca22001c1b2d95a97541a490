@@ -1,0 +1,7 @@
+package com.ebmdev.sprinboot.app.models.domain;
+
+public class Producto {
+
+	private String nombre;
+	private Integer precio;
+}

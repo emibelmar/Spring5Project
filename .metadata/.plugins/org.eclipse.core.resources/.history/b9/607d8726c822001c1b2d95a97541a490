@@ -1,0 +1,14 @@
+package com.ebmdev.sprinboot.app.services;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+//@Service("IndexServiceImpl2")
+public class IndexServiceImpl2 implements IndexService {
+
+	@Override
+	public String ejemplo() {
+		return "ejecutando ejemplo() en IndexServiceImpl2...";
+	}
+
+}

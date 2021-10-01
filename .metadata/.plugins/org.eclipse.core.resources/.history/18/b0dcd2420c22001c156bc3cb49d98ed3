@@ -1,0 +1,11 @@
+package com.ebmdev.sprinboot.app.services;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class IndexServiceImpl {
+
+	public String exampleMethod() {
+		return "ejecutando ejemplo()...";
+	}
+}
