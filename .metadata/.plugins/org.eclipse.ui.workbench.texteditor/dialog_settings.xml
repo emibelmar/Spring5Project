@@ -5,6 +5,7 @@
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="IndexServiceImpl2"/>
 		</list>
 		<list key="replacehistory">
 		</list>
