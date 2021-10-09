@@ -8,7 +8,6 @@
 
 <body>
 	<h3 th:text="${titulo}" />
-
 	<ul>
 		<li th:text="${usuario.nombre}" />
 		<li th:text="${usuario.apellido}" />
@@ -17,6 +16,8 @@
 		<li th:text="${usuario.email}" />
 		<li th:text="${usuario.id}" />
 		<li th:text="${usuario.edad}" />
+		<li th:text="${usuario.pais.codigo}" />
+		<li th:text="${#dates.format(usuario.fechaNacimiento, 'dd/MM/yyyy')}" />
 	</ul>
 </body>
 

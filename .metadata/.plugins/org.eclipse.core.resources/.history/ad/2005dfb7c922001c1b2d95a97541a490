@@ -1,6 +1,0 @@
-package com.ebmdev.sprinboot.app;
-
-public interface IndexService {
-
-	String ejemplo();
-}

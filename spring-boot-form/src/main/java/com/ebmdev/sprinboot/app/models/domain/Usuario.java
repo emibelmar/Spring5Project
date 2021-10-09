@@ -2,22 +2,21 @@ package com.ebmdev.sprinboot.app.models.domain;
 
 import java.util.Date;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ebmdev.sprinboot.app.validation.IdRegex;
 import com.ebmdev.sprinboot.app.validation.Requerido;
 
 public class Usuario {
 
-	// @Pattern(regexp = "[\\d]{2}[.,][\\d]{3}[.,][\\d]{3}[-][A-Z]{1}")
 	@IdRegex
 	private String id;
 
@@ -32,10 +31,8 @@ public class Usuario {
 	@Email
 	private String email;
 
-	// @NotEmpty
 	private String nombre;
 
-	// @NotEmpty
 	@Requerido
 	private String apellido;
 
@@ -45,8 +42,11 @@ public class Usuario {
 	private Integer edad;
 
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past
 	private Date fechaNacimiento;
+
+	@Valid
+	private Pais pais;
 
 	public String getUsername() {
 		return username;
@@ -110,6 +110,14 @@ public class Usuario {
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 
 }

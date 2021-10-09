@@ -1,9 +1,0 @@
-package com.ebmdev.sprinboot.app.services;
-
-public class IndexService {
-
-	public String exampleMethod() {
-
-		return "executing exampleMethod()...";
-	}
-}

@@ -1,7 +1,0 @@
-package com.ebmdev.sprinboot.app.controllers;
-
-@Controller
-@Reque
-public class IndexController {
-
-}
