@@ -1,12 +1,9 @@
 package com.ebmdev.sprinboot.app.models.domain;
 
-import javax.validation.constraints.NotEmpty;
-
 public class Pais {
 
 	private Integer id;
 
-	@NotEmpty
 	private String codigo;
 
 	private String nombre;
@@ -42,6 +39,11 @@ public class Pais {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	@Override
+	public String toString() {
+		return id.toString();
 	}
 
 }

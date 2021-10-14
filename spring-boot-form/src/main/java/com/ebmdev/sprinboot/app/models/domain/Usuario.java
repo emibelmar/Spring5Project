@@ -1,8 +1,8 @@
 package com.ebmdev.sprinboot.app.models.domain;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -45,8 +45,18 @@ public class Usuario {
 	@Past
 	private Date fechaNacimiento;
 
-	@Valid
+	@NotNull
 	private Pais pais;
+
+	@NotEmpty
+	private List<Rol> roles;
+
+	private Boolean habilitar;
+
+	private String valorSecreto;
+
+	@NotEmpty
+	private String genero;
 
 	public String getUsername() {
 		return username;
@@ -118,6 +128,38 @@ public class Usuario {
 
 	public void setPais(Pais pais) {
 		this.pais = pais;
+	}
+
+	public List<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
+
+	public Boolean getHabilitar() {
+		return habilitar;
+	}
+
+	public void setHabilitar(Boolean habilitar) {
+		this.habilitar = habilitar;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getValorSecreto() {
+		return valorSecreto;
+	}
+
+	public void setValorSecreto(String valorSecreto) {
+		this.valorSecreto = valorSecreto;
 	}
 
 }

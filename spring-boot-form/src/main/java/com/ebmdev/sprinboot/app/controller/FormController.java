@@ -19,12 +19,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.ebmdev.sprinboot.app.editors.NombreMayusEditor;
+import com.ebmdev.sprinboot.app.editors.PaisPropertyEditor;
+import com.ebmdev.sprinboot.app.editors.RolesPropertyEditor;
 import com.ebmdev.sprinboot.app.models.domain.Pais;
+import com.ebmdev.sprinboot.app.models.domain.Rol;
 import com.ebmdev.sprinboot.app.models.domain.Usuario;
+import com.ebmdev.sprinboot.app.services.PaisService;
+import com.ebmdev.sprinboot.app.services.RolService;
 import com.ebmdev.sprinboot.app.validation.UsuarioValidador;
 
 @Controller
@@ -33,6 +39,18 @@ public class FormController {
 
 	@Autowired
 	private UsuarioValidador usuarioValidator;
+
+	@Autowired
+	private PaisService paisService;
+
+	@Autowired
+	private RolService rolService;
+
+	@Autowired
+	private PaisPropertyEditor paisPropertyEditor;
+
+	@Autowired
+	private RolesPropertyEditor rolesPropertyEditor;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -49,6 +67,11 @@ public class FormController {
 		// CustomEditor para el nombre
 		binder.registerCustomEditor(String.class, "apellido", new NombreMayusEditor());
 
+		// CustomEditor para el pais
+		binder.registerCustomEditor(Pais.class, "pais", paisPropertyEditor);
+
+		// CustomEditor para el rol
+		binder.registerCustomEditor(Rol.class, "roles", rolesPropertyEditor);
 	}
 
 	@GetMapping("/form")
@@ -56,27 +79,43 @@ public class FormController {
 		Usuario usuario = new Usuario();
 		usuario.setNombre("Emilio");
 		usuario.setApellido("Beltran");
-		usuario.setId("123.456.789-A");
+		usuario.setId("12.345.678-A");
+		usuario.setHabilitar(true);
+		usuario.setValorSecreto("### valorSecreto ###");
+		usuario.setPais(new Pais(1, "ES", "España"));
+		usuario.setRoles(Arrays.asList(new Rol(3, "Usuario", "ROLE_USER")));
 		model.addAttribute("titulo", "Formulario usuarios");
 		model.addAttribute("usuario", usuario);
 		return "form";
 	}
 
 	@PostMapping("/form")
-	public String procesar(@Valid Usuario usuario, BindingResult result, Model model, SessionStatus status) {
+	public String procesar(@Valid Usuario usuario, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute("titulo", "Resultado form");
+
 			return "form";
 		}
+
+		return "redirect:/ver";
+	}
+
+	@GetMapping("/ver")
+	public String ver(@SessionAttribute(name = "usuario", required = false) Usuario usuario, Model model,
+			SessionStatus status) {
+
+		if (usuario == null) {
+			return "redirect:/form";
+		}
 		model.addAttribute("titulo", "Resultado form");
-		model.addAttribute("usuario", usuario);
+
 		status.setComplete();
 		return "resultado";
 	}
 
 	@ModelAttribute("listaPaises")
 	public List<Pais> listaPaises() {
-		return Arrays.asList(new Pais(1, "ES", "España"), new Pais(2, "FR", "Francia"), new Pais(3, "IT", "Italia"),
-				new Pais(4, "AL", "Alemania"), new Pais(5, "PL", "Polonia"));
+		return paisService.listar();
 	}
 
 	@ModelAttribute("paises")
@@ -94,4 +133,29 @@ public class FormController {
 		paises.put("PL", "Polonia");
 		return paises;
 	}
+
+	@ModelAttribute("listaRolesString")
+	public List<String> listaRolesString() {
+		return Arrays.asList("ROLE_ADMIN", "ROLE_USER", "ROLE_MODERATOR");
+	}
+
+	@ModelAttribute("rolesMap")
+	public Map<String, String> rolesMap() {
+		Map<String, String> roles = new HashMap<String, String>();
+		roles.put("ROLE_ADMIN", "Administrador");
+		roles.put("ROLE_MODERATOR", "Moderador");
+		roles.put("ROLE_USER", "Usuario");
+		return roles;
+	}
+
+	@ModelAttribute("listaRoles")
+	public List<Rol> listaRoles() {
+		return rolService.listar();
+	}
+
+	@ModelAttribute("generos")
+	public List<String> genero() {
+		return Arrays.asList("Hombre", "Mujer");
+	}
+
 }
